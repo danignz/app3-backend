@@ -42,7 +42,7 @@ npm run seed
 
 - User can sign up and create and account
 - User can login and log out
-
+- When the user accesses the platform will discover a community of users and projects
 ## User stories (Backlog)
 
 - Members of a project can communicate by chat
