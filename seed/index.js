@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 
 const User = require("../models/User");
 const Project = require("../models/Project");
+const Request = require("../models/Request");
 
 const users = [
   {
@@ -84,6 +85,8 @@ const users = [
   },
 ];
 
+let allUsersID, allProjectsID;
+
 mongoose
   .connect(process.env.MONGO_URL)
   .then((x) => console.log(`Connected to ${x.connection.name}`))
@@ -98,7 +101,7 @@ mongoose
     return User.insertMany(users);
   })
   .then((allUsers) => {
-    const allUsersID = allUsers.map((user) => {
+    allUsersID = allUsers.map((user) => {
       return user._id;
     });
 
@@ -134,6 +137,31 @@ mongoose
       },
     ];
     return Project.insertMany(projects);
+  })
+  .then((allProjects) => {
+    allProjectsID = allProjects.map((project) => {
+      return project._id;
+    });
+
+    const requests = [
+      {
+        user: allUsersID[1],
+        project: allProjectsID[0],
+        status: "Pending",
+      },
+      {
+        user: allUsersID[2],
+        project: allProjectsID[0],
+        status: "Denied",
+      },
+      {
+        user: allUsersID[3],
+        project: allProjectsID[0],
+        status: "Accepted",
+      },
+    ];
+
+    return Request.insertMany(requests);
   })
   .then(() => {
     console.log("Seed done 🌱");
