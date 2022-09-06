@@ -1,28 +1,55 @@
 const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
 
-const userSchema = new Schema({
-  email: {
-    type: String,
-    unique: true,
-    required: true
-  },
-  hashedPassword: {
-    type: String,
-    required: true
-  },
-  username: {
-    type: String,
-    required: true
-  },
-  role: {
-    type: String,
-    enum: ['user', 'admin'],
-    default: 'user'
-  }
-},
+const userSchema = new Schema(
   {
-    timestamps: true
-  });
+    email: {
+      type: String,
+      unique: true,
+      required: [true, "Email is required."],
+      lowercase: true,
+      trim: true,
+    },
+    hashedPassword: {
+      type: String,
+      required: [true, "Password is required."],
+    },
+    fullName: {
+      type: String,
+      required: [true, "Full name is required."],
+    },
+    profileImage: {
+      type: String,
+      default: "http://www.defaultImage.com",
+    },
+    profession: {
+      type: String,
+      enum: ["Web Developer", "UX/UI Designer", "Data Analyst", "Cybersecurity Analyst"],
+      required: [true, "Profession is required"],
+    },
+    location: {
+      type: String,
+      enum: ["Amsterdam", "Barcelona", "Berlin", "Lisbon", "London", "Madrid", "Mexico City", "Miami", "Paris", "São Paulo", "Remote"],
+      required: [true, "Location is required"],
+    },
+    headLine: {
+      type: String,
+    },
+    about: {
+      type: String,
+    },
+    contactInfo: {
+      type: String,
+    },
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user",
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
 module.exports = model("User", userSchema);
