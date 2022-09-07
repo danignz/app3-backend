@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const User = require("../models/User");
 const Project = require("../models/Project");
 const Request = require("../models/Request");
+const Review = require("../models/Review");
 
 const users = [
   {
@@ -92,6 +93,12 @@ mongoose
   .then((x) => console.log(`Connected to ${x.connection.name}`))
   /* Clean all collections */
   .then(() => {
+    return Review.deleteMany();
+  })
+  .then(() => {
+    return Request.deleteMany();
+  })
+  .then(() => {
     return Project.deleteMany();
   })
   .then(() => {
@@ -101,6 +108,7 @@ mongoose
     return User.insertMany(users);
   })
   .then((allUsers) => {
+
     allUsersID = allUsers.map((user) => {
       return user._id;
     });
@@ -133,12 +141,14 @@ mongoose
           "The customer app helps the customer to access the online food ordering platforms, search for the right restaurant or the dish they want to order, place their orders and pay easily. There are many features you can implement in the app to make it easy and exciting to use.\n\n-Features: \n1. Push Notifications in On-Demand Food Ordering App\n2. Discount/Rewards, Cashback and Loyalty Programs\n3. Real-Time GPS Tracking of Food Delivery\n4. Social Media Integration",
         projectUrl: "https://food-order-app-nil.herokuapp.com/",
         onCampus: false,
+        likes: 0,
         status: "Open",
       },
     ];
     return Project.insertMany(projects);
   })
   .then((allProjects) => {
+
     allProjectsID = allProjects.map((project) => {
       return project._id;
     });
@@ -162,6 +172,27 @@ mongoose
     ];
 
     return Request.insertMany(requests);
+  })
+  .then(() => {
+
+    const reviews = [
+      {
+        user: allUsersID[3],
+        project: allProjectsID[0],
+        title: "Very inspiring project",
+        comment: "This project has inspired me to solve a problem with the user interface and reorder the main screen in my personal project.",
+        puntuation: 5,
+      },
+      {
+        user: allUsersID[4],
+        project: allProjectsID[0],
+        title: "Very good App, although with possible improvements",
+        comment: "It would be nice to add an option so that users could chat with each other.",
+        puntuation: 4,
+      },
+    ];
+
+    return Review.insertMany(reviews);
   })
   .then(() => {
     console.log("Seed done 🌱");

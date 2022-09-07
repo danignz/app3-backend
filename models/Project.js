@@ -54,6 +54,10 @@ const projectSchema = new Schema(
     onCampus: {
       type: Boolean,
     },
+    likes: {
+      type: Number,
+      default: 0,
+    },
     status: {
       type: String,
       enum: ["Open", "Closed"],
