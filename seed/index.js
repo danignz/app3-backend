@@ -1,15 +1,19 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
+const bcrypt = require('bcryptjs');
 
 const User = require("../models/User");
 const Project = require("../models/Project");
 const Request = require("../models/Request");
 const Review = require("../models/Review");
 
+const salt = bcrypt.genSaltSync(10);
+const hashedPassword = bcrypt.hashSync("Ironhack1234", salt);
+
 const users = [
   {
     email: "george1972@gmail.com",
-    hashedPassword: "Ir0nHack5863",
+    hashedPassword: hashedPassword,
     fullName: "George Ford",
     profileImage:
       "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg",
@@ -25,7 +29,7 @@ const users = [
   },
   {
     email: "olgaadams@gmail.com",
-    hashedPassword: "Ir0nHack5863",
+    hashedPassword: hashedPassword,
     fullName: "Olga Adams",
     profileImage:
       "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg",
@@ -40,7 +44,7 @@ const users = [
   },
   {
     email: "renatagomes@gmail.com",
-    hashedPassword: "Ir0nHack5863",
+    hashedPassword: hashedPassword,
     fullName: "Renata Gomes",
     profileImage:
       "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg",
@@ -55,7 +59,7 @@ const users = [
   },
   {
     email: "peterdubois@gmail.com",
-    hashedPassword: "Ir0nHack5863",
+    hashedPassword: hashedPassword,
     fullName: "Peter Dubois",
     profileImage:
       "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg",
@@ -70,7 +74,7 @@ const users = [
   },
   {
     email: "mariameyer@gmail.com",
-    hashedPassword: "Ir0nHack5863",
+    hashedPassword: hashedPassword,
     fullName: "Maria Meyer",
     profileImage:
       "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg",
