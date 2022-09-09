@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const Project = require("../models/Project");
 const ErrorResponse = require("../utils/error");
-const { isAuthenticated } = require("../middlewares/jwt");
+const { isAuthenticated, isProjectOwner } = require("../middlewares/jwt");
 
 // @desc    Get all projects
 // @route   GET /api/v1/projects/
@@ -10,7 +10,7 @@ router.get("/", isAuthenticated, async (req, res, next) => {
   try {
     const projects = await Project.find({});
     if (!projects.length) {
-      next(new ErrorResponse("No projects found", 404));
+      return next(new ErrorResponse("No projects found", 404));
     }
     res.status(200).json({ data: projects });
   } catch (error) {
@@ -26,7 +26,7 @@ router.get("/:id", isAuthenticated, async (req, res, next) => {
   try {
     const project = await Project.findById(id);
     if (!project) {
-      next(new ErrorResponse(`Project not found by id: ${id}`, 404));
+      return next(new ErrorResponse(`Project not found by id: ${id}`, 404));
     }
     res.status(200).json({ data: project });
   } catch (error) {
@@ -72,7 +72,7 @@ router.post("/", isAuthenticated, async (req, res, next) => {
       status,
     });
     if (!project) {
-      next(
+      return next(
         new ErrorResponse("An error ocurred while creating the project", 500)
       );
     }
@@ -85,7 +85,7 @@ router.post("/", isAuthenticated, async (req, res, next) => {
 // @desc    Edit a project
 // @route   PUT /api/v1/projects/:id
 // @access  Private
-router.put("/:id", isAuthenticated, async (req, res, next) => {
+router.put("/:id", isAuthenticated, isProjectOwner, async (req, res, next) => {
   const { id } = req.params;
   const {
     collaborators,
@@ -105,7 +105,7 @@ router.put("/:id", isAuthenticated, async (req, res, next) => {
   try {
     const project = await Project.findById(id);
     if (!project) {
-      next(new ErrorResponse(`Project not found by id: ${id}`, 404));
+      return next(new ErrorResponse(`Project not found by id: ${id}`, 404));
     } else {
       const updatedProject = await Project.findByIdAndUpdate(
         id,
@@ -131,12 +131,12 @@ router.put("/:id", isAuthenticated, async (req, res, next) => {
 // @desc    Delete a project
 // @route   DELETE /api/v1/projects/:id
 // @access  Private
-router.delete("/:id", isAuthenticated, async (req, res, next) => {
+router.delete("/:id", isAuthenticated, isProjectOwner, async (req, res, next) => {
   const { id } = req.params;
   try {
     const project = await Project.findById(id);
     if (!project) {
-      next(new ErrorResponse(`Project not found by id: ${id}`, 404));
+      return next(new ErrorResponse(`Project not found by id: ${id}`, 404));
     } else {
       const deleted = await Project.findByIdAndDelete(id);
       res.status(202).json({ data: deleted });
