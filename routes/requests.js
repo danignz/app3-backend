@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const Request = require("../models/Request");
 const ErrorResponse = require("../utils/error");
-const { isAuthenticated } = require("../middlewares/jwt");
+const { isAuthenticated, isOwner } = require("../middlewares/jwt");
 
 // @desc    Get all requests
 // @route   GET /api/v1/requests/
@@ -58,7 +58,7 @@ router.post("/:id", isAuthenticated, async (req, res, next) => {
 // @desc    Edit a request
 // @route   PUT /api/v1/requests/:id
 // @access  Private
-router.put("/:id", async (req, res, next) => {
+router.put("/:id", isAuthenticated, isOwner("request"), async (req, res, next) => {
   const { id } = req.params;
   const { status } = req.body;
   try {
@@ -81,7 +81,7 @@ router.put("/:id", async (req, res, next) => {
 // @desc    Delete a request
 // @route   DELETE /api/v1/requests/:id
 // @access  Private
-router.delete("/:id", isAuthenticated, async (req, res, next) => {
+router.delete("/:id", isAuthenticated, isOwner("request"), async (req, res, next) => {
     const { id } = req.params;
     try {
       const request = await Request.findById(id);

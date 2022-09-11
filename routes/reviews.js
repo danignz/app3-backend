@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const Review = require("../models/Review");
 const ErrorResponse = require("../utils/error");
-const { isAuthenticated } = require("../middlewares/jwt");
+const { isAuthenticated, isOwner } = require("../middlewares/jwt");
 
 // @desc    Get all reviews
 // @route   GET /api/v1/reviews/
@@ -67,7 +67,7 @@ router.post("/:projectId", isAuthenticated, async (req, res, next) => {
 // @desc    Edit a review
 // @route   PUT /api/v1/reviews/:id
 // @access  Private
-router.put("/:id", async (req, res, next) => {
+router.put("/:id", isAuthenticated, isOwner("review"), async (req, res, next) => {
   const { id } = req.params;
   const { title, comment, puntuation } = req.body;
 
@@ -93,7 +93,7 @@ router.put("/:id", async (req, res, next) => {
 // @desc    Delete a review
 // @route   DELETE /api/v1/reviews/:id
 // @access  Private
-router.delete("/:id", isAuthenticated, async (req, res, next) => {
+router.delete("/:id", isAuthenticated, isOwner("review"), async (req, res, next) => {
   const { id } = req.params;
   try {
     const review = await Review.findById(id);

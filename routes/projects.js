@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const Project = require("../models/Project");
 const ErrorResponse = require("../utils/error");
-const { isAuthenticated, isProjectOwner } = require("../middlewares/jwt");
+const { isAuthenticated, isOwner } = require("../middlewares/jwt");
 
 // @desc    Get all projects
 // @route   GET /api/v1/projects/
@@ -85,7 +85,7 @@ router.post("/", isAuthenticated, async (req, res, next) => {
 // @desc    Edit a project
 // @route   PUT /api/v1/projects/:id
 // @access  Private
-router.put("/:id", isAuthenticated, isProjectOwner, async (req, res, next) => {
+router.put("/:id", isAuthenticated, isOwner("project"), async (req, res, next) => {
   const { id } = req.params;
   const {
     collaborators,
@@ -131,7 +131,7 @@ router.put("/:id", isAuthenticated, isProjectOwner, async (req, res, next) => {
 // @desc    Delete a project
 // @route   DELETE /api/v1/projects/:id
 // @access  Private
-router.delete("/:id", isAuthenticated, isProjectOwner, async (req, res, next) => {
+router.delete("/:id", isAuthenticated, isOwner("project"), async (req, res, next) => {
   const { id } = req.params;
   try {
     const project = await Project.findById(id);

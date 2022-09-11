@@ -1,13 +1,13 @@
 const router = require("express").Router();
 const User = require("../models/User");
 const ErrorResponse = require("../utils/error");
-const { isAuthenticated } = require("../middlewares/jwt");
+const { isAuthenticated, isOwner } = require("../middlewares/jwt");
 const fileUploader = require("../config/cloudinary.config");
 
 // @desc    Edit a user
 // @route   PUT /api/v1/users/:id
 // @access  Private
-router.put("/:id", isAuthenticated, fileUploader.single("profileImage"), async (req, res, next) => {
+router.put("/:id", isAuthenticated, isOwner("user"), fileUploader.single("profileImage"), async (req, res, next) => {
       const { id } = req.params;
       const { existingImage } = req.body;
   
