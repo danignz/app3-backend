@@ -1,5 +1,7 @@
 const router = require("express").Router();
 const Project = require("../models/Project");
+const Review = require("../models/Review");
+const Request = require("../models/Request");
 const ErrorResponse = require("../utils/error");
 const { isAuthenticated, isOwner } = require("../middlewares/jwt");
 const fileUploader = require("../config/cloudinary.config");
@@ -152,6 +154,8 @@ router.delete("/:id", isAuthenticated, isOwner("project"), async (req, res, next
     if (!project) {
       return next(new ErrorResponse(`Project not found by id: ${id}`, 404));
     } else {
+      await Request.deleteMany({project: id});
+      await Review.deleteMany({project: id});
       const deleted = await Project.findByIdAndDelete(id);
       res.status(202).json({ data: deleted });
     }
