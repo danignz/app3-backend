@@ -11,18 +11,18 @@ router.put("/:id", isAuthenticated, isOwner("user"), fileUploader.single("profil
       const { id } = req.params;
       const { existingImage } = req.body;
   
-      let user_img;
+      let profileImg;
       if (req.file) {
-        user_img = req.file.path;
+        profileImg = req.file.path;
       } else {
-        user_img = existingImage;
+        profileImg = existingImage;
       }
   
       try {
         const updatedUser = await User.findByIdAndUpdate(
           id,
           {
-            profileImage: user_img,
+            profileImage: profileImg,
           },
           { new: true }
         );

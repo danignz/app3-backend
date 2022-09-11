@@ -2,6 +2,7 @@ const router = require("express").Router();
 const Project = require("../models/Project");
 const ErrorResponse = require("../utils/error");
 const { isAuthenticated, isOwner } = require("../middlewares/jwt");
+const fileUploader = require("../config/cloudinary.config");
 
 // @desc    Get all projects
 // @route   GET /api/v1/projects/
@@ -37,11 +38,10 @@ router.get("/:id", isAuthenticated, async (req, res, next) => {
 // @desc    Create a project
 // @route   POST /api/v1/projects
 // @access  Private
-router.post("/", isAuthenticated, async (req, res, next) => {
+router.post("/", isAuthenticated, fileUploader.single("projectImage"), async (req, res, next) => {
   const {
     collaborators,
     name,
-    projectImage,
     startDate,
     endDate,
     description,
@@ -57,12 +57,19 @@ router.post("/", isAuthenticated, async (req, res, next) => {
   const likes = 0;
   const status = "Open";
 
+  let projectImg;
+  if (req.file) {
+    projectImg = req.file.path;
+  } else {
+    projectImg = "https://res.cloudinary.com/ddvgumbyu/image/upload/v1662891453/app3-project/projectdefault_cpr1kv.jpg";
+  }
+
   try {
     const project = await Project.create({
       collaborators,
       lead,
       name,
-      projectImage,
+      projectImage: projectImg,
       startDate: parseStartDate,
       endDate: parseEndDate,
       description,
@@ -85,22 +92,29 @@ router.post("/", isAuthenticated, async (req, res, next) => {
 // @desc    Edit a project
 // @route   PUT /api/v1/projects/:id
 // @access  Private
-router.put("/:id", isAuthenticated, isOwner("project"), async (req, res, next) => {
+router.put("/:id", isAuthenticated, isOwner("project"), fileUploader.single("projectImage"), async (req, res, next) => {
   const { id } = req.params;
   const {
     collaborators,
     name,
-    projectImage,
     startDate,
     endDate,
     description,
     projectUrl,
     onCampus,
+    existingImage
   } = req.body;
 
   const parseStartDate = Date.parse(startDate);
   const parseEndDate = Date.parse(endDate);
   const parseBoolean = onCampus === "Yes";
+
+  let projectImg;
+  if (req.file) {
+    projectImg = req.file.path;
+  } else {
+    projectImg = existingImage;
+  }
 
   try {
     const project = await Project.findById(id);
@@ -112,7 +126,7 @@ router.put("/:id", isAuthenticated, isOwner("project"), async (req, res, next) =
         {
           collaborators,
           name,
-          projectImage,
+          projectImage: projectImg,
           startDate: parseStartDate,
           endDate: parseEndDate,
           description,

@@ -36,7 +36,7 @@ const projectSchema = new Schema(
     },
     projectImage: {
       type: String,
-      default: "http://www.defaultImage.com",
+      default: "https://res.cloudinary.com/ddvgumbyu/image/upload/v1662891453/app3-project/projectdefault_cpr1kv.jpg",
     },
     startDate: {
       type: Date,
