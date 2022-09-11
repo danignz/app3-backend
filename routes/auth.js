@@ -5,26 +5,40 @@ const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
 const { isAuthenticated } = require('../middlewares/jwt');
 const saltRounds = 10;
+const fileUploader = require("../config/cloudinary.config");
 
 // @desc    SIGN UP new user
 // @route   POST /api/v1/auth/signup
 // @access  Public
-router.post('/signup', async (req, res, next) => {
-  const { email, password, fullName } = req.body;
-  // Check if email or password or name are provided as empty string 
-  if (email === "" || password === "" || fullName === "") {
-    return next(new ErrorResponse('Please fill all the fields to register', 400))
+router.post('/signup', fileUploader.single("profileImage"), async (req, res, next) => {
+  const { email, password, fullName, profileImage, profession, location, headline, about, contactInfo } = req.body;
+  // Check if the mandatory fields are provided as empty string
+  if (email === "" || password === "" || fullName === "" || profession === "" || location === "" ) {
+    return next(new ErrorResponse('Please fill all mandatory fields to register', 400))
   }
   // Use regex to validate the email format
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
   if (!emailRegex.test(email)) {
     return next(new ErrorResponse('Email is not a valid format', 400))
   }
-   // Use regex to validate the password format
+  // Use regex to validate the password format
   const passwordRegex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
   if (!passwordRegex.test(password)) {
     return next(new ErrorResponse('Password must have at least 6 characters and contain at least one number, one lowercase and one uppercase letter', 400))
   }
+  // Use regex to validate the fullname format
+  const fullNameRegex = /^(([A-Za-z]+[\-\']?)*([A-Za-z]+)?\s)+([A-Za-z]+[\-\']?)*([A-Za-z]+)?$/;
+  if (!fullNameRegex.test(fullName)) {
+    return next(new ErrorResponse('You must write your name and your surname separate by a space', 400))
+  }
+
+  let profileImg;
+  if (req.file) {
+    profileImg = req.file.path;
+  } else {
+    profileImg = "https://res.cloudinary.com/ddvgumbyu/image/upload/v1662751695/app3-project/profiledefault_c7ofd5.png";
+  }
+
   try {
     const userInDB = await User.findOne({ email });
     if (userInDB) {
@@ -32,10 +46,16 @@ router.post('/signup', async (req, res, next) => {
     } else {
       const salt = bcrypt.genSaltSync(saltRounds);
       const hashedPassword = bcrypt.hashSync(password, salt);
-      const user = await User.create({ email, hashedPassword, fullName });
-      const publicUser = { // Decide what fields of our user we want to return 
-        fullName: user.fullName,
+      const user = await User.create({ email, hashedPassword, fullName, profileImage: profileImg, profession, location, headline, about, contactInfo });
+      const publicUser = {
         email: user.email,
+        fullName: user.fullName,
+        profileImage: user.profileImage,
+        profession: user.profession,
+        location: user.location,
+        headline: user.headline,
+        about: user.about,
+        contactInfo: user.contactInfo,
       }
       res.status(201).json({ data: publicUser });
     }
@@ -66,7 +86,10 @@ router.post('/login', async (req, res, next) => {
         const payload = {
           email: userInDB.email,
           fullName: userInDB.fullName,
-          _id: userInDB._id
+          _id: userInDB._id,
+          profileImage: userInDB.profileImage,
+          profession: userInDB.profession,
+          location: userInDB.location
         }
         // Use the jwt middleware to create de token
         const authToken = jwt.sign(
