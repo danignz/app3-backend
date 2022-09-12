@@ -54,13 +54,34 @@ router.put(
         profession: updatedUser.profession,
         location: updatedUser.location,
       };
-      
+
       res.status(202).json({ data: updatedUser });
     } catch (error) {
       next(error);
     }
   }
 );
+
+// @desc    Get user enumValues
+// @route   GET /api/v1/users/enumValues
+// @access  Public
+router.get("/enumvalues", async (req, res, next) => {
+  let enumValuesProfession = (enumValuesLocation = null);
+
+  enumValuesProfession = User.schema.path("profession").enumValues;
+  enumValuesLocation = User.schema.path("location").enumValues;
+
+  const enumValues = {
+    profession: enumValuesProfession,
+    location: enumValuesLocation,
+  };
+
+  if (enumValuesProfession && enumValuesLocation) {
+    res.status(200).json({ data: enumValues });
+  } else {
+    return next(new ErrorResponse(`Can not access enumValues DB`, 404));
+  }
+});
 
 // @desc    Get single user
 // @route   GET /api/v1/users/:id
@@ -81,7 +102,7 @@ router.get("/:id", isAuthenticated, async (req, res, next) => {
       headline: user.headline,
       about: user.about,
       contactInfo: user.contactInfo,
-    }
+    };
     res.status(200).json({ data: publicUser });
   } catch (error) {
     next(error);
