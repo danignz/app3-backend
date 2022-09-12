@@ -348,18 +348,23 @@ mongoose
       {
         collaborators: [
           {
+            rol: "Web Developer",
+            quantity: 3,
+            users: [allUsersID[1], allUsersID[2]],
+          },
+          {
             rol: "UX/UI Designer",
-            quantity: 2,
-            users: [allUsersID[5], allUsersID[8]],
+            quantity: 3,
+            users: [allUsersID[5]],
           },
           {
             rol: "Data Analyst",
             quantity: 2,
-            users: [allUsersID[10],allUsersID[11]],
+            users: [allUsersID[11]],
           },
           {
             rol: "Cybersecurity Analyst",
-            quantity: 1,
+            quantity: 3,
             users: [allUsersID[17]],
           },
         ],
@@ -385,17 +390,82 @@ mongoose
 
     const requests = [
       {
-        user: allUsersID[11],
+        user: allUsersID[3],
         project: allProjectsID[0],
         status: "Pending",
       },
       {
-        user: allUsersID[2],
+        user: allUsersID[4],
+        project: allProjectsID[0],
+        status: "Pending",
+      },
+      {
+        user: allUsersID[5],
+        project: allProjectsID[0],
+        status: "Pending",
+      },
+      {
+        user: allUsersID[6],
+        project: allProjectsID[0],
+        status: "Pending",
+      },
+      {
+        user: allUsersID[7],
+        project: allProjectsID[0],
+        status: "Pending",
+      },
+      {
+        user: allUsersID[8],
+        project: allProjectsID[0],
+        status: "Pending",
+      },
+      {
+        user: allUsersID[9],
+        project: allProjectsID[0],
+        status: "Pending",
+      },
+      {
+        user: allUsersID[10],
+        project: allProjectsID[0],
+        status: "Pending",
+      },
+      {
+        user: allUsersID[12],
+        project: allProjectsID[0],
+        status: "Pending",
+      },
+      {
+        user: allUsersID[13],
+        project: allProjectsID[0],
+        status: "Pending",
+      },
+      {
+        user: allUsersID[14],
+        project: allProjectsID[0],
+        status: "Pending",
+      },
+      {
+        user: allUsersID[16],
+        project: allProjectsID[0],
+        status: "Pending",
+      },
+      {
+        user: allUsersID[17],
+        project: allProjectsID[0],
+        status: "Pending",
+      },
+      {
+        user: allUsersID[18],
+        project: allProjectsID[0],
+        status: "Pending",
+      },
+      {
+        user: allUsersID[19],
         project: allProjectsID[0],
         status: "Denied",
       },
       {
-        user: allUsersID[3],
+        user: allUsersID[20],
         project: allProjectsID[0],
         status: "Accepted",
       },

@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Request = require("../models/Request");
 const Project = require("../models/Project");
+const User = require("../models/User");
 const ErrorResponse = require("../utils/error");
 const { isAuthenticated, isOwner } = require("../middlewares/jwt");
 
@@ -51,9 +52,11 @@ router.post("/:projectID", isAuthenticated, async (req, res, next) => {
       );
     }
     // Check if user had done a previous request for this project
-    const requests = await Request.find({user: userID, project: projectID});
+    const requests = await Request.find({ user: userID, project: projectID });
     if (requests.length) {
-      return next(new ErrorResponse("You already did a request for this project", 404));
+      return next(
+        new ErrorResponse("You already did a request for this project", 404)
+      );
     }
     // Check if user is the project leader
     if (userID !== project.leader.toString()) {
@@ -84,30 +87,55 @@ router.post("/:projectID", isAuthenticated, async (req, res, next) => {
 // @desc    Edit a request
 // @route   PUT /api/v1/requests/:id
 // @access  Private
-router.put(
-  "/:id",
-  isAuthenticated,
-  isOwner("request"),
-  async (req, res, next) => {
-    const { id } = req.params;
-    const { status } = req.body;
-    try {
-      const request = await Request.findById(id);
-      if (!request) {
-        return next(new ErrorResponse(`Request not found by id: ${id}`, 404));
-      } else {
-        const updatedRequest = await Request.findByIdAndUpdate(
-          id,
-          { status },
-          { new: true }
-        );
-        res.status(202).json({ data: updatedRequest });
+router.put("/:id", isAuthenticated, async (req, res, next) => {
+  const { id } = req.params;
+  const { status } = req.body;
+  try {
+    const request = await Request.findById(id);
+    if (!request) {
+      return next(new ErrorResponse(`Request not found by id: ${id}`, 404));
+    } else {
+      if (status === "Accepted") {
+        const enumValuesProfession = User.schema.path("profession").enumValues;
+        const user = await User.findById(request.user);
+        const indexCollaborator = enumValuesProfession.indexOf(user.profession);
+        const project = await Project.findById(request.project);
+
+        if(project.collaborators[indexCollaborator].users.indexOf(user._id) !== -1){
+          return next(
+            new ErrorResponse(
+              `Unauthorized: user id: ${user._id} is already a member of this project.`,
+              401
+            )
+          );
+        }
+
+        if (
+          project.collaborators[indexCollaborator].users.length <
+          project.collaborators[indexCollaborator].quantity
+        ) {
+          project.collaborators[indexCollaborator].users.push(user._id);
+          project.save();
+        } else {
+          return next(
+            new ErrorResponse(
+              `Unauthorized: This project dont admit more ${enumValuesProfession[indexCollaborator]}.`,
+              401
+            )
+          );
+        }
       }
-    } catch (error) {
-      next(error);
+      const updatedRequest = await Request.findByIdAndUpdate(
+        id,
+        { status },
+        { new: true }
+      );
+      res.status(202).json({ data: updatedRequest });
     }
+  } catch (error) {
+    next(error);
   }
-);
+});
 
 // @desc    Delete a request
 // @route   DELETE /api/v1/requests/:id
