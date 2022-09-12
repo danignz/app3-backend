@@ -11,7 +11,7 @@ const fileUploader = require("../config/cloudinary.config");
 // @route   POST /api/v1/auth/signup
 // @access  Public
 router.post('/signup', fileUploader.single("profileImage"), async (req, res, next) => {
-  const { email, password, fullName, profileImage, profession, location, headline, about, contactInfo } = req.body;
+  const { email, password, fullName, profession, location, headline, about, contactInfo } = req.body;
   // Check if the mandatory fields are provided as empty string
   if (email === "" || password === "" || fullName === "" || profession === "" || location === "" ) {
     return next(new ErrorResponse('Please fill all mandatory fields to register', 400))

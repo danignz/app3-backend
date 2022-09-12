@@ -363,7 +363,7 @@ mongoose
             users: [allUsersID[17]],
           },
         ],
-        lead: allUsersID[0],
+        leader: allUsersID[0],
         name: "Food Ordering App",
         projectImage: "http://www.defaultImage.com",
         startDate: "2022-11-15",

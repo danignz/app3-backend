@@ -55,7 +55,7 @@ router.post("/", isAuthenticated, fileUploader.single("projectImage"), async (re
   const parseEndDate = Date.parse(endDate);
   const parseBoolean = onCampus === "Yes";
   //these fields do not arrive by form
-  const lead = req.payload._id;
+  const leader = req.payload._id;
   const likes = 0;
   const status = "Open";
 
@@ -69,7 +69,7 @@ router.post("/", isAuthenticated, fileUploader.single("projectImage"), async (re
   try {
     const project = await Project.create({
       collaborators,
-      lead,
+      leader,
       name,
       projectImage: projectImg,
       startDate: parseStartDate,

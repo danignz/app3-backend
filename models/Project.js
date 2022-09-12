@@ -26,7 +26,7 @@ const projectSchema = new Schema(
         _id: false,
       },
     ],
-    lead: {
+    leader: {
       type: Schema.Types.ObjectId,
       ref: "User",
     },
