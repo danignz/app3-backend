@@ -104,6 +104,7 @@ router.put("/:id", isAuthenticated, isOwner("project"), fileUploader.single("pro
     description,
     projectUrl,
     onCampus,
+    status,
     existingImage
   } = req.body;
 
@@ -134,6 +135,7 @@ router.put("/:id", isAuthenticated, isOwner("project"), fileUploader.single("pro
           description,
           projectUrl,
           onCampus: parseBoolean,
+          status
         },
         { new: true }
       );
