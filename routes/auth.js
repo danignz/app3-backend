@@ -11,7 +11,7 @@ const fileUploader = require("../config/cloudinary.config");
 // @route   POST /api/v1/auth/signup
 // @access  Public
 router.post('/signup', fileUploader.single("profileImage"), async (req, res, next) => {
-  const { email, password, fullName, profession, location, headline, about, contactInfo } = req.body;
+  const { email, password, fullName, profession, location, headLine, about, contactInfo } = req.body;
   // Check if the mandatory fields are provided as empty string
   if (email === "" || password === "" || fullName === "" || profession === "" || location === "" ) {
     return next(new ErrorResponse('Please fill all mandatory fields to register', 400))
@@ -46,14 +46,14 @@ router.post('/signup', fileUploader.single("profileImage"), async (req, res, nex
     } else {
       const salt = bcrypt.genSaltSync(saltRounds);
       const hashedPassword = bcrypt.hashSync(password, salt);
-      const user = await User.create({ email, hashedPassword, fullName, profileImage: profileImg, profession, location, headline, about, contactInfo });
+      const user = await User.create({ email, hashedPassword, fullName, profileImage: profileImg, profession, location, headLine, about, contactInfo });
       const publicUser = {
         email: user.email,
         fullName: user.fullName,
         profileImage: user.profileImage,
         profession: user.profession,
         location: user.location,
-        headline: user.headline,
+        headLine: user.headLine,
         about: user.about,
         contactInfo: user.contactInfo,
       }
