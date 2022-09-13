@@ -1,66 +1,64 @@
 const router = require("express").Router();
 const User = require("../models/User");
-const { isAuthenticated, isOwner } = require("../middlewares/jwt");
+const { isAuthenticated } = require("../middlewares/jwt");
 const ErrorResponse = require("../utils/error");
 const fileUploader = require("../config/cloudinary.config");
 
 // @desc    Edit a user
-// @route   PUT /api/v1/users/:id
+// @route   PUT /api/v1/users/edit
 // @access  Private
-router.put(
-  "/:id",
-  isAuthenticated,
-  isOwner("user"),
-  async (req, res, next) => {
-    const { id } = req.params;
-    const {
-      fullName,
-      profileImage,
-      profession,
-      location,
-      headLine,
-      about,
-      contactInfo,
-      existingImage,
-    } = req.body;
+router.put("/edit", isAuthenticated, async (req, res, next) => {
 
-    let profileImg;
-    if (profileImage) {
-      profileImg = profileImage;
-    } else {
-      profileImg = existingImage;
-    }
+  const id = req.payload._id;
+  const {
+    fullName,
+    profileImage,
+    profession,
+    location,
+    headLine,
+    about,
+    contactInfo,
+  } = req.body;
 
-    try {
-      const updatedUser = await User.findByIdAndUpdate(
-        id,
-        {
-          fullName,
-          profileImage: profileImg,
-          profession,
-          location,
-          headLine,
-          about,
-          contactInfo,
-        },
-        { new: true }
-      );
-
-      req.payload = {
-        email: updatedUser.email,
-        fullName: updatedUser.fullName,
-        _id: updatedUser._id,
-        profileImage: updatedUser.profileImage,
-        profession: updatedUser.profession,
-        location: updatedUser.location,
-      };
-
-      res.status(202).json({ data: updatedUser });
-    } catch (error) {
-      next(error);
-    }
+  // Check if the mandatory fields are provided as empty string
+  if (fullName === "" || profession === "" || location === "") {
+    return next(
+      new ErrorResponse("Please fill all mandatory fields to register", 400)
+    );
   }
-);
+
+  // Use regex to validate the fullname format
+  const fullNameRegex =
+    /^(([A-Za-z]+[\-\']?)*([A-Za-z]+)?\s)+([A-Za-z]+[\-\']?)*([A-Za-z]+)?$/;
+  if (!fullNameRegex.test(fullName)) {
+    return next(
+      new ErrorResponse(
+        "You must write your name and your surname separate by a space",
+        400
+      )
+    );
+  }
+
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      {
+        fullName,
+        profileImage,
+        profession,
+        location,
+        headLine,
+        about,
+        contactInfo,
+      },
+      { new: true }
+    );
+
+    res.status(202).json({ data: updatedUser });
+  } catch (error) {
+    next(error);
+  }
+});
 
 // @desc    Get user enumValues
 // @route   GET /api/v1/users/enumValues
@@ -86,12 +84,45 @@ router.get("/enumvalues", async (req, res, next) => {
 // @desc    Upload a picture to Cloudinary
 // @route   POST /api/v1/users/editupload
 // @access  Private
-router.post("/editupload", isAuthenticated, fileUploader.single("profileImage"), (req, res, next) => {
-  if (!req.file) {
-    next(new ErrorResponse('Error uploading the image', 500));
-    return;
+router.post(
+  "/editupload",
+  isAuthenticated,
+  fileUploader.single("profileImage"),
+  (req, res, next) => {
+    if (!req.file) {
+      next(new ErrorResponse("Error uploading the image", 500));
+      return;
+    }
+    res.json({ fileUrl: req.file.path });
   }
-  res.json({ fileUrl: req.file.path });
+);
+
+// @desc    Get all data related to the current authenticated user
+// @route   GET /api/v1/user/loggedinuser
+// @access  Private
+router.get('/loggedinuser', isAuthenticated, async (req, res, next) => {
+  try {
+    const user = await User.findById(req.payload._id);
+    if (!user) {
+      next(new ErrorResponse('No user found', 404));
+      return;
+    }
+    const publicUser = {
+      _id: user._id,
+      email: user.email,
+      fullName: user.fullName,
+      profileImage: user.profileImage,
+      profession: user.profession,
+      location: user.location,
+      headLine: user.headLine,
+      about: user.about,
+      contactInfo: user.contactInfo,
+    }
+    console.log(publicUser)
+    res.status(200).json({ data: publicUser })
+  } catch (error) {
+    next(error);
+  }
 });
 
 // @desc    Get single user
