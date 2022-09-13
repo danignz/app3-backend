@@ -11,11 +11,11 @@ router.put(
   "/:id",
   isAuthenticated,
   isOwner("user"),
-  fileUploader.single("profileImage"),
   async (req, res, next) => {
     const { id } = req.params;
     const {
       fullName,
+      profileImage,
       profession,
       location,
       headLine,
@@ -25,8 +25,8 @@ router.put(
     } = req.body;
 
     let profileImg;
-    if (req.file) {
-      profileImg = req.file.path;
+    if (profileImage) {
+      profileImg = profileImage;
     } else {
       profileImg = existingImage;
     }
@@ -81,6 +81,17 @@ router.get("/enumvalues", async (req, res, next) => {
   } else {
     return next(new ErrorResponse(`Can not access enumValues DB`, 404));
   }
+});
+
+// @desc    Upload a picture to Cloudinary
+// @route   POST /api/v1/users/editupload
+// @access  Private
+router.post("/editupload", isAuthenticated, fileUploader.single("profileImage"), (req, res, next) => {
+  if (!req.file) {
+    next(new ErrorResponse('Error uploading the image', 500));
+    return;
+  }
+  res.json({ fileUrl: req.file.path });
 });
 
 // @desc    Get single user

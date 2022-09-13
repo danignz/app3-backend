@@ -10,8 +10,8 @@ const fileUploader = require("../config/cloudinary.config");
 // @desc    SIGN UP new user
 // @route   POST /api/v1/auth/signup
 // @access  Public
-router.post('/signup', fileUploader.single("profileImage"), async (req, res, next) => {
-  const { email, password, fullName, profession, location, headLine, about, contactInfo } = req.body;
+router.post('/signup', async (req, res, next) => {
+  const { email, password, fullName, profileImage, profession, location, headLine, about, contactInfo } = req.body;
   // Check if the mandatory fields are provided as empty string
   if (email === "" || password === "" || fullName === "" || profession === "" || location === "" ) {
     return next(new ErrorResponse('Please fill all mandatory fields to register', 400))
@@ -33,8 +33,8 @@ router.post('/signup', fileUploader.single("profileImage"), async (req, res, nex
   }
 
   let profileImg;
-  if (req.file) {
-    profileImg = req.file.path;
+  if (profileImage) {
+    profileImg = profileImage;
   } else {
     profileImg = "https://res.cloudinary.com/ddvgumbyu/image/upload/v1662751695/app3-project/profiledefault_c7ofd5.png";
   }
@@ -106,6 +106,17 @@ router.post('/login', async (req, res, next) => {
   } catch (error) {
     next(error)
   }
+});
+
+// @desc    Upload a picture to Cloudinary
+// @route   POST /api/v1/auth/signupupload
+// @access  Public
+router.post("/signupupload", fileUploader.single("profileImage"), (req, res, next) => {
+  if (!req.file) {
+    next(new ErrorResponse('Error uploading the image', 500));
+    return;
+  }
+  res.json({ fileUrl: req.file.path });
 });
 
 // @desc    GET logged in user
