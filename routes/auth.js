@@ -109,9 +109,9 @@ router.post('/login', async (req, res, next) => {
 });
 
 // @desc    Upload a picture to Cloudinary
-// @route   POST /api/v1/auth/signupupload
+// @route   POST /api/v1/auth/signup-upload
 // @access  Public
-router.post("/signupupload", fileUploader.single("profileImage"), (req, res, next) => {
+router.post("/signup-upload", fileUploader.single("profileImage"), (req, res, next) => {
   if (!req.file) {
     next(new ErrorResponse('Error uploading the image', 500));
     return;

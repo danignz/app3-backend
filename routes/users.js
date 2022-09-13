@@ -61,9 +61,9 @@ router.put("/edit", isAuthenticated, async (req, res, next) => {
 });
 
 // @desc    Get user enumValues
-// @route   GET /api/v1/users/enumValues
+// @route   GET /api/v1/users/enum-values
 // @access  Public
-router.get("/enumvalues", async (req, res, next) => {
+router.get("/enum-values", async (req, res, next) => {
   let enumValuesProfession = (enumValuesLocation = null);
 
   enumValuesProfession = User.schema.path("profession").enumValues;
@@ -82,10 +82,10 @@ router.get("/enumvalues", async (req, res, next) => {
 });
 
 // @desc    Upload a picture to Cloudinary
-// @route   POST /api/v1/users/editupload
+// @route   POST /api/v1/users/edit-upload
 // @access  Private
 router.post(
-  "/editupload",
+  "/edit-upload",
   isAuthenticated,
   fileUploader.single("profileImage"),
   (req, res, next) => {
@@ -98,9 +98,9 @@ router.post(
 );
 
 // @desc    Get all data related to the current authenticated user
-// @route   GET /api/v1/user/loggedinuser
+// @route   GET /api/v1/user/logged-in-user
 // @access  Private
-router.get('/loggedinuser', isAuthenticated, async (req, res, next) => {
+router.get('/logged-in-user', isAuthenticated, async (req, res, next) => {
   try {
     const user = await User.findById(req.payload._id);
     if (!user) {
