@@ -39,6 +39,34 @@ router.put("/edit", isAuthenticated, async (req, res, next) => {
     );
   }
 
+  //Only is allowed three links for social media networks
+  if (contactInfo.split(",").length - 1 > 2) {
+    return next(
+      new ErrorResponse("Maximun number of social media links is 3", 400)
+    );
+  }
+  //Check Url correct format and url must be separated by commas
+  const contactInfoRegex =
+    /^$|^[a-z0-9@:%_.~#?&//=-]+(,[a-z0-9@:%_.~#?&//=-]+)*$/i;
+  const contactInfoUrlRegex =
+    /^$|[-a-zA-Z0-9@:%._~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_.~#?&//=]*)?/gi;
+  if (!contactInfoRegex.test(contactInfo)) {
+    return next(
+      new ErrorResponse(
+        "Links must be separate by comma and no spaces. Last char can not be a comma. Special chars like quotes are invalid",
+        400
+      )
+    );
+  }
+  if (!contactInfoUrlRegex.test(contactInfo)) {
+    return next(
+      new ErrorResponse(
+        "Url invalid format! - Example: https://www.instagram.com/user",
+        400
+      )
+    );
+  }
+
   try {
     const updatedUser = await User.findByIdAndUpdate(
       id,
