@@ -675,7 +675,8 @@ mongoose
         ],
         leader: allUsersID[0],
         name: "Food Ordering App",
-        projectImage: "https://res.cloudinary.com/ddvgumbyu/image/upload/v1663147897/app3-project/projectspictures/0project_ctaw0x.png",
+        projectImage:
+          "https://res.cloudinary.com/ddvgumbyu/image/upload/v1663147897/app3-project/projectspictures/0project_ctaw0x.png",
         startDate: "2022-11-15",
         endDate: "2023-03-15",
         description:
@@ -700,7 +701,7 @@ mongoose
           {
             rol: "Data Analyst",
             quantity: 2,
-            users: [allUsersID[20],allUsersID[21]],
+            users: [allUsersID[20], allUsersID[21]],
           },
           {
             rol: "Cybersecurity Analyst",
@@ -710,7 +711,8 @@ mongoose
         ],
         leader: allUsersID[4],
         name: "Flava Music Events",
-        projectImage: "https://res.cloudinary.com/ddvgumbyu/image/upload/v1663148354/app3-project/projectspictures/1project_vmbme8.jpg",
+        projectImage:
+          "https://res.cloudinary.com/ddvgumbyu/image/upload/v1663148354/app3-project/projectspictures/1project_vmbme8.jpg",
         startDate: "2022-12-11",
         endDate: "2023-04-05",
         description:
@@ -745,7 +747,8 @@ mongoose
         ],
         leader: allUsersID[10],
         name: "Top AudioBooks App",
-        projectImage: "https://res.cloudinary.com/ddvgumbyu/image/upload/v1663149176/app3-project/projectspictures/2project_fcddj9.png",
+        projectImage:
+          "https://res.cloudinary.com/ddvgumbyu/image/upload/v1663149176/app3-project/projectspictures/2project_fcddj9.png",
         startDate: "2023-02-01",
         endDate: "2023-07-01",
         description:
@@ -780,7 +783,8 @@ mongoose
         ],
         leader: allUsersID[24],
         name: "My finances in my pocket",
-        projectImage: "https://res.cloudinary.com/ddvgumbyu/image/upload/v1663150185/app3-project/projectspictures/3project.png_qojd1b.jpg",
+        projectImage:
+          "https://res.cloudinary.com/ddvgumbyu/image/upload/v1663150185/app3-project/projectspictures/3project.png_qojd1b.jpg",
         startDate: "2022-11-21",
         endDate: "2023-06-15",
         description:
@@ -816,67 +820,137 @@ mongoose
       },
       {
         user: allUsersID[6],
-        project: allProjectsID[0],
+        project: allProjectsID[1],
         status: "Pending",
       },
       {
         user: allUsersID[17],
-        project: allProjectsID[0],
+        project: allProjectsID[1],
         status: "Pending",
       },
       {
         user: allUsersID[28],
-        project: allProjectsID[0],
+        project: allProjectsID[2],
         status: "Pending",
       },
       {
         user: allUsersID[39],
-        project: allProjectsID[0],
+        project: allProjectsID[2],
         status: "Pending",
       },
       {
         user: allUsersID[20],
-        project: allProjectsID[0],
+        project: allProjectsID[2],
         status: "Pending",
       },
       {
         user: allUsersID[22],
-        project: allProjectsID[0],
+        project: allProjectsID[2],
         status: "Pending",
       },
       {
         user: allUsersID[13],
-        project: allProjectsID[0],
+        project: allProjectsID[2],
         status: "Pending",
       },
       {
         user: allUsersID[24],
-        project: allProjectsID[0],
+        project: allProjectsID[2],
         status: "Pending",
       },
       {
         user: allUsersID[16],
-        project: allProjectsID[0],
+        project: allProjectsID[3],
         status: "Pending",
       },
       {
         user: allUsersID[37],
-        project: allProjectsID[0],
+        project: allProjectsID[3],
         status: "Pending",
       },
       {
         user: allUsersID[18],
-        project: allProjectsID[0],
+        project: allProjectsID[3],
         status: "Pending",
       },
       {
-        user: allUsersID[29],
+        user: allUsersID[6],
         project: allProjectsID[0],
         status: "Denied",
       },
       {
-        user: allUsersID[20],
+        user: allUsersID[8],
         project: allProjectsID[0],
+        status: "Accepted",
+      },
+      {
+        user: allUsersID[15],
+        project: allProjectsID[0],
+        status: "Denied",
+      },
+      {
+        user: allUsersID[23],
+        project: allProjectsID[0],
+        status: "Accepted",
+      },
+      {
+        user: allUsersID[8],
+        project: allProjectsID[1],
+        status: "Denied",
+      },
+      {
+        user: allUsersID[9],
+        project: allProjectsID[1],
+        status: "Accepted",
+      },
+      {
+        user: allUsersID[25],
+        project: allProjectsID[1],
+        status: "Denied",
+      },
+      {
+        user: allUsersID[33],
+        project: allProjectsID[1],
+        status: "Accepted",
+      },
+      {
+        user: allUsersID[7],
+        project: allProjectsID[2],
+        status: "Denied",
+      },
+      {
+        user: allUsersID[12],
+        project: allProjectsID[2],
+        status: "Accepted",
+      },
+      {
+        user: allUsersID[22],
+        project: allProjectsID[2],
+        status: "Denied",
+      },
+      {
+        user: allUsersID[35],
+        project: allProjectsID[2],
+        status: "Accepted",
+      },
+      {
+        user: allUsersID[3],
+        project: allProjectsID[3],
+        status: "Denied",
+      },
+      {
+        user: allUsersID[17],
+        project: allProjectsID[3],
+        status: "Accepted",
+      },
+      {
+        user: allUsersID[27],
+        project: allProjectsID[3],
+        status: "Denied",
+      },
+      {
+        user: allUsersID[39],
+        project: allProjectsID[3],
         status: "Accepted",
       },
     ];

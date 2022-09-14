@@ -11,7 +11,7 @@ const fileUploader = require("../config/cloudinary.config");
 // @access  Private
 router.get("/", isAuthenticated, async (req, res, next) => {
   try {
-    const projects = await Project.find({});
+    const projects = await Project.find({}).populate("leader").populate("collaborators.users");
     if (!projects.length) {
       return next(new ErrorResponse("No projects found", 404));
     }
@@ -27,7 +27,7 @@ router.get("/", isAuthenticated, async (req, res, next) => {
 router.get("/:id", isAuthenticated, async (req, res, next) => {
   const { id } = req.params;
   try {
-    const project = await Project.findById(id);
+    const project = await Project.findById(id).populate("leader").populate("collaborators.users");
     if (!project) {
       return next(new ErrorResponse(`Project not found by id: ${id}`, 404));
     }

@@ -8,7 +8,7 @@ const { isAuthenticated, isOwner } = require("../middlewares/jwt");
 // @access  Private
 router.get("/", isAuthenticated, async (req, res, next) => {
   try {
-    const reviews = await Review.find({});
+    const reviews = await Review.find({}).populate("user").populate("project");
     if (!reviews.length) {
       return next(new ErrorResponse("No reviews found", 404));
     }
@@ -24,7 +24,7 @@ router.get("/", isAuthenticated, async (req, res, next) => {
 router.get("/:id", isAuthenticated, async (req, res, next) => {
   const { id } = req.params;
   try {
-    const review = await Review.findById(id);
+    const review = await Review.findById(id).populate("user").populate("project");
     if (!review) {
       return next(new ErrorResponse(`Review not found by id: ${id}`, 404));
     }

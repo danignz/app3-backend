@@ -10,7 +10,7 @@ const { isAuthenticated, isOwner } = require("../middlewares/jwt");
 // @access  Private
 router.get("/", isAuthenticated, async (req, res, next) => {
   try {
-    const requests = await Request.find({});
+    const requests = await Request.find({}).populate("user").populate("project");
     if (!requests.length) {
       return next(new ErrorResponse("No requests found", 404));
     }
@@ -26,7 +26,7 @@ router.get("/", isAuthenticated, async (req, res, next) => {
 router.get("/:id", isAuthenticated, async (req, res, next) => {
   const { id } = req.params;
   try {
-    const request = await Request.findById(id);
+    const request = await Request.findById(id).populate("user").populate("project");
     if (!request) {
       return next(new ErrorResponse(`Request not found by id: ${id}`, 404));
     }
