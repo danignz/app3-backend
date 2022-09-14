@@ -95,7 +95,7 @@ router.post("/signup", async (req, res, next) => {
     profileImg = profileImage;
   } else {
     profileImg =
-      "https://res.cloudinary.com/ddvgumbyu/image/upload/v1662751695/app3-project/profiledefault_c7ofd5.png";
+      "https://res.cloudinary.com/ddvgumbyu/image/upload/v1662751695/app3-project/profilepictures/profiledefault_c7ofd5.png";
   }
 
   try {

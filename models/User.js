@@ -20,7 +20,7 @@ const userSchema = new Schema(
     },
     profileImage: {
       type: String,
-      default: "https://res.cloudinary.com/ddvgumbyu/image/upload/v1662751695/app3-project/profiledefault_c7ofd5.png",
+      default: "https://res.cloudinary.com/ddvgumbyu/image/upload/v1662751695/app3-project/profilepictures/profiledefault_c7ofd5.png",
     },
     profession: {
       type: String,

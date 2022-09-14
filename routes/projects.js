@@ -63,7 +63,7 @@ router.post("/", isAuthenticated, fileUploader.single("projectImage"), async (re
   if (req.file) {
     projectImg = req.file.path;
   } else {
-    projectImg = "https://res.cloudinary.com/ddvgumbyu/image/upload/v1662891453/app3-project/projectdefault_cpr1kv.jpg";
+    projectImg = "https://res.cloudinary.com/ddvgumbyu/image/upload/v1663150913/app3-project/projectspictures/defaultproject_zojuvf.png";
   }
 
   try {
