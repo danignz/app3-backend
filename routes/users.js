@@ -11,6 +11,7 @@ router.put("/edit", isAuthenticated, async (req, res, next) => {
 
   const id = req.payload._id;
   const {
+    email,
     fullName,
     profileImage,
     profession,
@@ -21,10 +22,16 @@ router.put("/edit", isAuthenticated, async (req, res, next) => {
   } = req.body;
 
   // Check if the mandatory fields are provided as empty string
-  if (fullName === "" || profession === "" || location === "") {
+  if (email === "" || fullName === "" || profession === "" || location === "") {
     return next(
       new ErrorResponse("Please fill all mandatory fields to register", 400)
     );
+  }
+
+  // Use regex to validate the email format
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  if (!emailRegex.test(email)) {
+    return next(new ErrorResponse("Email is not a valid format", 400));
   }
 
   // Use regex to validate the fullname format
@@ -68,9 +75,18 @@ router.put("/edit", isAuthenticated, async (req, res, next) => {
   }
 
   try {
+
+    const userInDB = await User.findOne({ email });
+    if (userInDB) {
+      return next(
+        new ErrorResponse(`User already exists with email ${email}`, 400)
+      );
+    }
+
     const updatedUser = await User.findByIdAndUpdate(
       id,
       {
+        email,
         fullName,
         profileImage,
         profession,
@@ -86,6 +102,8 @@ router.put("/edit", isAuthenticated, async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+
+
 });
 
 // @desc    Get user enumValues
