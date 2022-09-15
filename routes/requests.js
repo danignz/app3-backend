@@ -54,7 +54,7 @@ router.post("/:projectID", isAuthenticated, async (req, res, next) => {
     // Check if project is Open and accepting request
     if (project.status === "Closed") {
       return next(
-        new ErrorResponse(`Project id: ${projectID} is closed`, 400)
+        new ErrorResponse(`Project "${project.name}" is closed`, 400)
       );
     }
     // Check if user had done a previous request for this project
