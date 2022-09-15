@@ -8,7 +8,6 @@ const fileUploader = require("../config/cloudinary.config");
 // @route   PUT /api/v1/users/edit
 // @access  Private
 router.put("/edit", isAuthenticated, async (req, res, next) => {
-
   const id = req.payload._id;
   const {
     email,
@@ -75,9 +74,9 @@ router.put("/edit", isAuthenticated, async (req, res, next) => {
   }
 
   try {
-
     const userInDB = await User.findOne({ email });
-    if (userInDB) {
+
+    if (userInDB && userInDB.email !== req.payload.email) {
       return next(
         new ErrorResponse(`User already exists with email ${email}`, 400)
       );
@@ -102,8 +101,6 @@ router.put("/edit", isAuthenticated, async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-
-
 });
 
 // @desc    Get user enumValues
@@ -146,11 +143,11 @@ router.post(
 // @desc    Get all data related to the current authenticated user
 // @route   GET /api/v1/user/logged-in-user
 // @access  Private
-router.get('/logged-in-user', isAuthenticated, async (req, res, next) => {
+router.get("/logged-in-user", isAuthenticated, async (req, res, next) => {
   try {
     const user = await User.findById(req.payload._id);
     if (!user) {
-      next(new ErrorResponse('No user found', 404));
+      next(new ErrorResponse("No user found", 404));
       return;
     }
     const publicUser = {
@@ -163,9 +160,9 @@ router.get('/logged-in-user', isAuthenticated, async (req, res, next) => {
       headLine: user.headLine,
       about: user.about,
       contactInfo: user.contactInfo,
-    }
-    console.log(publicUser)
-    res.status(200).json({ data: publicUser })
+    };
+    console.log(publicUser);
+    res.status(200).json({ data: publicUser });
   } catch (error) {
     next(error);
   }
