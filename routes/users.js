@@ -164,6 +164,7 @@ router.get("/:id", isAuthenticated, async (req, res, next) => {
       return next(new ErrorResponse(`User not found by id: ${id}`, 404));
     }
     const publicUser = {
+      _id: user._id,
       email: user.email,
       fullName: user.fullName,
       profileImage: user.profileImage,
