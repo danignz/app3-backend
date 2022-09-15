@@ -10,7 +10,9 @@ const { isAuthenticated, isOwner } = require("../middlewares/jwt");
 // @access  Private
 router.get("/", isAuthenticated, async (req, res, next) => {
   try {
-    const requests = await Request.find({}).populate("user").populate("project");
+    const requests = await Request.find({})
+      .populate("user")
+      .populate("project");
     if (!requests.length) {
       return next(new ErrorResponse("No requests found", 404));
     }
@@ -26,7 +28,9 @@ router.get("/", isAuthenticated, async (req, res, next) => {
 router.get("/:id", isAuthenticated, async (req, res, next) => {
   const { id } = req.params;
   try {
-    const request = await Request.findById(id).populate("user").populate("project");
+    const request = await Request.findById(id)
+      .populate("user")
+      .populate("project");
     if (!request) {
       return next(new ErrorResponse(`Request not found by id: ${id}`, 404));
     }
@@ -64,6 +68,37 @@ router.post("/:projectID", isAuthenticated, async (req, res, next) => {
         new ErrorResponse("You already did a request for this project", 400)
       );
     }
+
+    // Check if there are places avariable for that role
+    const enumValuesProfession = User.schema.path("profession").enumValues;
+    const user = await User.findById(userID);
+    const indexCollaborator = enumValuesProfession.indexOf(user.profession);
+    
+    if (
+      project.collaborators[indexCollaborator].users.indexOf(user._id) !== -1
+    ) {
+      return next(
+        new ErrorResponse(
+          `Unauthorized: ${user.fullName} is already a member of this project.`,
+          401
+        )
+      );
+    }
+
+    if (
+      !(
+        project.collaborators[indexCollaborator].users.length <
+        project.collaborators[indexCollaborator].quantity
+      )
+    ) {
+      return next(
+        new ErrorResponse(
+          `Unauthorized: This project don't admit more ${enumValuesProfession[indexCollaborator]}.`,
+          401
+        )
+      );
+    }
+
     // Check if user is the project leader
     if (userID !== project.leader.toString()) {
       const request = await Request.create({
@@ -107,10 +142,13 @@ router.put("/:id", isAuthenticated, async (req, res, next) => {
         const indexCollaborator = enumValuesProfession.indexOf(user.profession);
         const project = await Project.findById(request.project);
 
-        if(project.collaborators[indexCollaborator].users.indexOf(user._id) !== -1){
+        if (
+          project.collaborators[indexCollaborator].users.indexOf(user._id) !==
+          -1
+        ) {
           return next(
             new ErrorResponse(
-              `Unauthorized: user id: ${user._id} is already a member of this project.`,
+              `Unauthorized: ${user.fullName} is already a member of this project.`,
               401
             )
           );
@@ -125,7 +163,7 @@ router.put("/:id", isAuthenticated, async (req, res, next) => {
         } else {
           return next(
             new ErrorResponse(
-              `Unauthorized: This project dont admit more ${enumValuesProfession[indexCollaborator]}.`,
+              `Unauthorized: This project don't admit more ${enumValuesProfession[indexCollaborator]}.`,
               401
             )
           );
