@@ -51,11 +51,17 @@ router.post("/:projectID", isAuthenticated, async (req, res, next) => {
         new ErrorResponse(`Project not found by id: ${projectID}`, 404)
       );
     }
+    // Check if project is Open and accepting request
+    if (project.status === "Closed") {
+      return next(
+        new ErrorResponse(`Project id: ${projectID} is closed`, 400)
+      );
+    }
     // Check if user had done a previous request for this project
     const requests = await Request.find({ user: userID, project: projectID });
     if (requests.length) {
       return next(
-        new ErrorResponse("You already did a request for this project", 404)
+        new ErrorResponse("You already did a request for this project", 400)
       );
     }
     // Check if user is the project leader
