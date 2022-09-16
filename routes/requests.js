@@ -12,7 +12,22 @@ router.get("/", isAuthenticated, async (req, res, next) => {
   try {
     const requests = await Request.find({})
       .populate("user")
-      .populate("project");
+      .populate("project")
+      .populate({
+        path: "project",
+        populate: {
+          path: "leader",
+          model: "User",
+        },
+      })
+      .populate({
+        path: "project",
+        populate: {
+          path: "collaborators.users",
+          model: "User",
+        },
+      });
+
     if (!requests.length) {
       return next(new ErrorResponse("No requests found", 404));
     }
@@ -30,7 +45,22 @@ router.get("/:id", isAuthenticated, async (req, res, next) => {
   try {
     const request = await Request.findById(id)
       .populate("user")
-      .populate("project");
+      .populate("project")
+      .populate({
+        path: "project",
+        populate: {
+          path: "leader",
+          model: "User",
+        },
+      })
+      .populate({
+        path: "project",
+        populate: {
+          path: "collaborators.users",
+          model: "User",
+        },
+      });
+
     if (!request) {
       return next(new ErrorResponse(`Request not found by id: ${id}`, 404));
     }
@@ -73,7 +103,7 @@ router.post("/:projectID", isAuthenticated, async (req, res, next) => {
     const enumValuesProfession = User.schema.path("profession").enumValues;
     const user = await User.findById(userID);
     const indexCollaborator = enumValuesProfession.indexOf(user.profession);
-    
+
     if (
       project.collaborators[indexCollaborator].users.indexOf(user._id) !== -1
     ) {

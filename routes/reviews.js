@@ -8,7 +8,24 @@ const { isAuthenticated, isOwner } = require("../middlewares/jwt");
 // @access  Private
 router.get("/", isAuthenticated, async (req, res, next) => {
   try {
-    const reviews = await Review.find({}).populate("user").populate("project");
+    const reviews = await Review.find({})
+      .populate("user")
+      .populate("project")
+      .populate({
+        path: "project",
+        populate: {
+          path: "leader",
+          model: "User",
+        },
+      })
+      .populate({
+        path: "project",
+        populate: {
+          path: "collaborators.users",
+          model: "User",
+        },
+      });
+
     if (!reviews.length) {
       return next(new ErrorResponse("No reviews found", 404));
     }
@@ -24,7 +41,24 @@ router.get("/", isAuthenticated, async (req, res, next) => {
 router.get("/:id", isAuthenticated, async (req, res, next) => {
   const { id } = req.params;
   try {
-    const review = await Review.findById(id).populate("user").populate("project");
+    const review = await Review.findById(id)
+      .populate("user")
+      .populate("project")
+      .populate({
+        path: "project",
+        populate: {
+          path: "leader",
+          model: "User",
+        },
+      })
+      .populate({
+        path: "project",
+        populate: {
+          path: "collaborators.users",
+          model: "User",
+        },
+      });
+
     if (!review) {
       return next(new ErrorResponse(`Review not found by id: ${id}`, 404));
     }
@@ -67,45 +101,55 @@ router.post("/:projectId", isAuthenticated, async (req, res, next) => {
 // @desc    Edit a review
 // @route   PUT /api/v1/reviews/:id
 // @access  Private
-router.put("/:id", isAuthenticated, isOwner("review"), async (req, res, next) => {
-  const { id } = req.params;
-  const { title, comment, puntuation } = req.body;
+router.put(
+  "/:id",
+  isAuthenticated,
+  isOwner("review"),
+  async (req, res, next) => {
+    const { id } = req.params;
+    const { title, comment, puntuation } = req.body;
 
-  const parsePuntuation = parseInt(puntuation);
+    const parsePuntuation = parseInt(puntuation);
 
-  try {
-    const review = await Review.findById(id);
-    if (!review) {
-      return next(new ErrorResponse(`Review not found by id: ${id}`, 404));
-    } else {
-      const updatedReview = await Review.findByIdAndUpdate(
-        id,
-        { title, comment, puntuation: parsePuntuation },
-        { new: true }
-      );
-      res.status(202).json({ data: updatedReview });
+    try {
+      const review = await Review.findById(id);
+      if (!review) {
+        return next(new ErrorResponse(`Review not found by id: ${id}`, 404));
+      } else {
+        const updatedReview = await Review.findByIdAndUpdate(
+          id,
+          { title, comment, puntuation: parsePuntuation },
+          { new: true }
+        );
+        res.status(202).json({ data: updatedReview });
+      }
+    } catch (error) {
+      next(error);
     }
-  } catch (error) {
-    next(error);
   }
-});
+);
 
 // @desc    Delete a review
 // @route   DELETE /api/v1/reviews/:id
 // @access  Private
-router.delete("/:id", isAuthenticated, isOwner("review"), async (req, res, next) => {
-  const { id } = req.params;
-  try {
-    const review = await Review.findById(id);
-    if (!review) {
-      return next(new ErrorResponse(`Review not found by id: ${id}`, 404));
-    } else {
-      const deleted = await Review.findByIdAndDelete(id);
-      res.status(202).json({ data: deleted });
+router.delete(
+  "/:id",
+  isAuthenticated,
+  isOwner("review"),
+  async (req, res, next) => {
+    const { id } = req.params;
+    try {
+      const review = await Review.findById(id);
+      if (!review) {
+        return next(new ErrorResponse(`Review not found by id: ${id}`, 404));
+      } else {
+        const deleted = await Review.findByIdAndDelete(id);
+        res.status(202).json({ data: deleted });
+      }
+    } catch (error) {
+      next(error);
     }
-  } catch (error) {
-    next(error);
   }
-});
+);
 
 module.exports = router;

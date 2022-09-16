@@ -921,7 +921,7 @@ mongoose
     const reviews = [
       {
         user: allUsersID[7],
-        project: allProjectsID[0],
+        project: allProjectsID[1],
         title: "Very inspiring project",
         comment:
           "This project has inspired me to solve a problem with the user interface and reorder the main screen in my personal project.",
@@ -929,7 +929,7 @@ mongoose
       },
       {
         user: allUsersID[14],
-        project: allProjectsID[0],
+        project: allProjectsID[3],
         title: "Very good App, although with possible improvements",
         comment:
           "It would be nice to add an option so that users could chat with each other.",
