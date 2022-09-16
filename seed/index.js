@@ -701,7 +701,7 @@ mongoose
           },
           {
             rol: "Cybersecurity Analyst",
-            quantity: 1,
+            quantity: 2,
             users: [allUsersID[38]],
           },
         ],
@@ -763,150 +763,175 @@ mongoose
     });
 
     const requests = [
+      //Project 0
       {
-        user: allUsersID[13],
+        user: allUsersID[1],
         project: allProjectsID[0],
-        status: "Pending",
+        status: "Accepted",
       },
       {
-        user: allUsersID[24],
+        user: allUsersID[2],
         project: allProjectsID[0],
-        status: "Pending",
+        status: "Accepted",
       },
       {
-        user: allUsersID[15],
+        user: allUsersID[10],
         project: allProjectsID[0],
-        status: "Pending",
+        status: "Accepted",
       },
       {
-        user: allUsersID[6],
-        project: allProjectsID[1],
-        status: "Pending",
+        user: allUsersID[11],
+        project: allProjectsID[0],
+        status: "Accepted",
       },
       {
-        user: allUsersID[17],
-        project: allProjectsID[1],
-        status: "Pending",
-      },
-      {
-        user: allUsersID[28],
-        project: allProjectsID[2],
-        status: "Pending",
-      },
-      {
-        user: allUsersID[39],
-        project: allProjectsID[2],
-        status: "Pending",
+        user: allUsersID[12],
+        project: allProjectsID[0],
+        status: "Accepted",
       },
       {
         user: allUsersID[20],
-        project: allProjectsID[2],
-        status: "Pending",
+        project: allProjectsID[0],
+        status: "Accepted",
       },
       {
-        user: allUsersID[22],
-        project: allProjectsID[2],
-        status: "Pending",
+        user: allUsersID[30],
+        project: allProjectsID[0],
+        status: "Accepted",
       },
       {
-        user: allUsersID[13],
-        project: allProjectsID[2],
-        status: "Pending",
+        user: allUsersID[31],
+        project: allProjectsID[0],
+        status: "Accepted",
       },
+      //Project 1
       {
-        user: allUsersID[24],
-        project: allProjectsID[2],
-        status: "Pending",
-      },
-      {
-        user: allUsersID[16],
-        project: allProjectsID[3],
-        status: "Pending",
-      },
-      {
-        user: allUsersID[37],
-        project: allProjectsID[3],
-        status: "Pending",
-      },
-      {
-        user: allUsersID[18],
-        project: allProjectsID[3],
-        status: "Pending",
+        user: allUsersID[5],
+        project: allProjectsID[1],
+        status: "Accepted",
       },
       {
         user: allUsersID[6],
-        project: allProjectsID[0],
-        status: "Denied",
+        project: allProjectsID[1],
+        status: "Accepted",
       },
       {
-        user: allUsersID[8],
-        project: allProjectsID[0],
+        user: allUsersID[13],
+        project: allProjectsID[1],
         status: "Accepted",
       },
       {
         user: allUsersID[15],
-        project: allProjectsID[0],
-        status: "Denied",
-      },
-      {
-        user: allUsersID[23],
-        project: allProjectsID[0],
+        project: allProjectsID[1],
         status: "Accepted",
       },
       {
-        user: allUsersID[8],
+        user: allUsersID[19],
         project: allProjectsID[1],
-        status: "Denied",
+        status: "Accepted",
+      },
+      {
+        user: allUsersID[20],
+        project: allProjectsID[1],
+        status: "Accepted",
+      },
+      {
+        user: allUsersID[21],
+        project: allProjectsID[1],
+        status: "Accepted",
+      },
+      {
+        user: allUsersID[39],
+        project: allProjectsID[1],
+        status: "Accepted",
+      },
+      //Project 2
+      {
+        user: allUsersID[8],
+        project: allProjectsID[2],
+        status: "Accepted",
       },
       {
         user: allUsersID[9],
-        project: allProjectsID[1],
+        project: allProjectsID[2],
         status: "Accepted",
       },
       {
-        user: allUsersID[25],
-        project: allProjectsID[1],
-        status: "Denied",
+        user: allUsersID[15],
+        project: allProjectsID[2],
+        status: "Accepted",
       },
       {
-        user: allUsersID[33],
-        project: allProjectsID[1],
+        user: allUsersID[18],
+        project: allProjectsID[2],
+        status: "Accepted",
+      },
+
+      {
+        user: allUsersID[23],
+        project: allProjectsID[2],
+        status: "Accepted",
+      },
+      {
+        user: allUsersID[38],
+        project: allProjectsID[2],
+        status: "Accepted",
+      },
+      //Project 3
+      {
+        user: allUsersID[5],
+        project: allProjectsID[3],
         status: "Accepted",
       },
       {
         user: allUsersID[7],
-        project: allProjectsID[2],
-        status: "Denied",
-      },
-      {
-        user: allUsersID[12],
-        project: allProjectsID[2],
-        status: "Accepted",
-      },
-      {
-        user: allUsersID[22],
-        project: allProjectsID[2],
-        status: "Denied",
-      },
-      {
-        user: allUsersID[35],
-        project: allProjectsID[2],
-        status: "Accepted",
-      },
-      {
-        user: allUsersID[3],
         project: allProjectsID[3],
-        status: "Denied",
+        status: "Accepted",
+      },
+      {
+        user: allUsersID[9],
+        project: allProjectsID[3],
+        status: "Accepted",
+      },
+      {
+        user: allUsersID[15],
+        project: allProjectsID[3],
+        status: "Accepted",
       },
       {
         user: allUsersID[17],
+        project: allProjectsID[3],
+        status: "Accepted",
+      },
+      {
+        user: allUsersID[19],
+        project: allProjectsID[3],
+        status: "Accepted",
+      },
+      {
+        user: allUsersID[25],
         project: allProjectsID[3],
         status: "Accepted",
       },
       {
         user: allUsersID[27],
         project: allProjectsID[3],
-        status: "Denied",
+        status: "Accepted",
+      },
+      {
+        user: allUsersID[29],
+        project: allProjectsID[3],
+        status: "Accepted",
+      },
+      {
+        user: allUsersID[35],
+        project: allProjectsID[3],
+        status: "Accepted",
+      },
+      {
+        user: allUsersID[37],
+        project: allProjectsID[3],
+        status: "Accepted",
       },
       {
         user: allUsersID[39],
