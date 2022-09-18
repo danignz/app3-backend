@@ -8,7 +8,7 @@ const Request = require("../models/Request");
 const Review = require("../models/Review");
 
 const salt = bcrypt.genSaltSync(10);
-const hashedPassword = bcrypt.hashSync("Ironhack1234", salt);
+const hashedPassword = bcrypt.hashSync("test", salt);
 
 const users = [
   {

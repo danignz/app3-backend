@@ -164,7 +164,7 @@ router.put("/:id", isAuthenticated, async (req, res, next) => {
   try {
     const request = await Request.findById(id);
     if (!request) {
-      return next(new ErrorResponse(`Request not found by id: ${id}`, 404));
+      return next(new ErrorResponse(`Request not found! Maybe it was canceled? Reload the page.`, 404));
     } else {
       if (status === "Accepted") {
         const enumValuesProfession = User.schema.path("profession").enumValues;
@@ -224,9 +224,16 @@ router.delete(
       const request = await Request.findById(id);
       if (!request) {
         return next(new ErrorResponse(`Request not found by id: ${id}`, 404));
-      } else {
+      } else if (request.status === "Pending") {
         const deleted = await Request.findByIdAndDelete(id);
         res.status(202).json({ data: deleted });
+      } else {
+        return next(
+          new ErrorResponse(
+            `Only can be deleted requests in Pending. Maybe it was processed? Reload the page.`,
+            400
+          )
+        );
       }
     } catch (error) {
       next(error);
