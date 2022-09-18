@@ -108,9 +108,9 @@ router.put("/:id", isAuthenticated, isOwner("project"), fileUploader.single("pro
     existingImage
   } = req.body;
 
-  const parseStartDate = Date.parse(startDate);
-  const parseEndDate = Date.parse(endDate);
-  const parseBoolean = onCampus === "Yes";
+  const parseStartDate = startDate && Date.parse(startDate);
+  const parseEndDate = endDate && Date.parse(endDate);
+  const parseBoolean = onCampus && onCampus === "Yes";
 
   let projectImg;
   if (req.file) {
