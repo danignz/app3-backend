@@ -36,7 +36,7 @@ const isOwner = (model) => async (req, res, next) => {
       if (!project) {
         return next(new ErrorResponse(`Project not found by id: ${id}`, 404));
       }
-      if (req.payload._id === project.lead.toString()) {
+      if (req.payload._id === project.leader.toString()) {
         next();
       } else {
         return next(
