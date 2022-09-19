@@ -52,7 +52,9 @@ const projectSchema = new Schema(
       type: String,
     },
     onCampus: {
-      type: Boolean,
+      type: String,
+      enum: ["Yes", "No"],
+      default: "Yes",
     },
     likes: {
       type: Number,

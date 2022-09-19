@@ -642,7 +642,7 @@ mongoose
         description:
           "The customer app helps the customer to access the online food ordering platforms, search for the right restaurant or the dish they want to order, place their orders and pay easily. There are many features you can implement in the app to make it easy and exciting to use.\n\n-Features: \n1. Push Notifications in On-Demand Food Ordering App\n2. Discount/Rewards, Cashback and Loyalty Programs\n3. Real-Time GPS Tracking of Food Delivery\n4. Social Media Integration",
         projectUrl: "https:/www.food-ordering.com/",
-        onCampus: false,
+        onCampus: "No",
         likes: 0,
         status: "Open",
       },
@@ -678,7 +678,7 @@ mongoose
         description:
           "This project was born with the idea of developing a social network application for users who love live events. \nThe user will be able to access discounts, know the local concert calendar in his area, and will be able to create a community of users with the same musical predirections. \nThe app will be available for responsive web, tablet and mobile.\n- Characteristics:\nUsage of Responsive Designs\nIntegrating offline usage\nImplementing cross-platform usability\nAn app which loads quickly",
         projectUrl: "https://flava-music-events.herokuapp.com/",
-        onCampus: true,
+        onCampus: "Yes",
         likes: 20,
         status: "Closed",
       },
@@ -714,7 +714,7 @@ mongoose
         description:
           "This project was born with the idea of developing an application so that freelance book producers can sell their products directly to users without using a publisher.\n- User flow:\n1-You open the app where you register your credentials with the app.\n2-After the registration, the app will ask about the genres of books that you would like to read such as horror, self-help, history, etc.\n3-Post selection of genres you will be presented with the main screen upon which all the books are laid in front of you in the audio formats. There is a various section of audiobooks and voice tracks that you can choose from.\n4-Some of the books are free to listen to, however, you need to buy a subscription to unlock most of the audiobooks.",
         projectUrl: "http:/www.top-audioBooks-app.com",
-        onCampus: false,
+        onCampus: "Yes",
         likes: 0,
         status: "Open",
       },
@@ -744,13 +744,13 @@ mongoose
         leader: allUsersID[24],
         name: "My finances in my pocket",
         projectImage:
-          "https://res.cloudinary.com/ddvgumbyu/image/upload/v1663150185/app3-project/projectspictures/3project.png_qojd1b.jpg",
+          "https://res.cloudinary.com/ddvgumbyu/image/upload/v1663590982/app3-project/projectspictures/3project_ogsokn.jpg",
         startDate: "2022-11-21",
         endDate: "2023-06-15",
         description:
           "Let’s be honest! We all want to live in a world where our finances are managed judiciously and our money is being saved automatically. Earlier people used complex accounting systems, today’s world is way more simple because a finance app can save the day. Why worry when there is an app for everything?\n\n-Key financial app features:\n1.  Account integration\n2.  Security\n3.  Real time spending and tracking\n4.  Simplicity\n5.  Alerts and notifications",
         projectUrl: "https://my-finances-in-my-pocket.herokuapp.com/",
-        onCampus: false,
+        onCampus: "No",
         likes: 23,
         status: "Closed",
       },
