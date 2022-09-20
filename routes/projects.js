@@ -181,6 +181,22 @@ router.put(
             );
           }
         }
+
+        if (status === "Closed") {
+          let numberCollaborators = 0;
+          for (let i = 0; i < enumValuesProfession.length; i++) {
+            numberCollaborators += project.collaborators[i].users.length;
+          }
+          if (numberCollaborators === 0) {
+            return next(
+              new ErrorResponse(
+                `Can not close a project with 0 collaborators. It's a collaborative platform!`,
+                400
+              )
+            );
+          }
+        }
+
         const updatedProject = await Project.findByIdAndUpdate(
           id,
           {
