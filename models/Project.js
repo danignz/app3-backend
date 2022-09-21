@@ -56,10 +56,6 @@ const projectSchema = new Schema(
       enum: ["Yes", "No"],
       default: "Yes",
     },
-    likes: {
-      type: Number,
-      default: 0,
-    },
     status: {
       type: String,
       enum: ["Open", "Closed"],

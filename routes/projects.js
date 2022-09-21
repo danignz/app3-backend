@@ -63,7 +63,6 @@ router.post("/", isAuthenticated, async (req, res, next) => {
 
   //these fields do not arrive by form
   const leader = req.payload._id;
-  const likes = 0;
   const status = "Open";
 
   let projectImg;
@@ -110,7 +109,6 @@ router.post("/", isAuthenticated, async (req, res, next) => {
       description,
       projectUrl,
       onCampus,
-      likes,
       status,
     });
     if (!project) {

@@ -634,16 +634,15 @@ mongoose
           },
         ],
         leader: allUsersID[0],
-        name: "Food Ordering App",
+        name: "Order Meal Delivery",
         projectImage:
-          "https://res.cloudinary.com/ddvgumbyu/image/upload/v1663147897/app3-project/projectspictures/0project_ctaw0x.png",
+          "https://res.cloudinary.com/ddvgumbyu/image/upload/v1663760566/app3-project/projectspictures/0project_ooc0vo.png",
         startDate: "2022-11-15",
-        endDate: "2023-03-15",
+        endDate: "2023-06-15",
         description:
           "The customer app helps the customer to access the online food ordering platforms, search for the right restaurant or the dish they want to order, place their orders and pay easily. There are many features you can implement in the app to make it easy and exciting to use.\n\n-Features: \n1. Push Notifications in On-Demand Food Ordering App\n2. Discount/Rewards, Cashback and Loyalty Programs\n3. Real-Time GPS Tracking of Food Delivery\n4. Social Media Integration",
-        projectUrl: "https:/www.food-ordering.com/",
+        projectUrl: "https:/www.meal-ordering.com/",
         onCampus: "No",
-        likes: 0,
         status: "Open",
       },
       {
@@ -679,7 +678,6 @@ mongoose
           "This project was born with the idea of developing a social network application for users who love live events. \nThe user will be able to access discounts, know the local concert calendar in his area, and will be able to create a community of users with the same musical predirections. \nThe app will be available for responsive web, tablet and mobile.\n- Characteristics:\nUsage of Responsive Designs\nIntegrating offline usage\nImplementing cross-platform usability\nAn app which loads quickly",
         projectUrl: "https://flava-music-events.herokuapp.com/",
         onCampus: "Yes",
-        likes: 20,
         status: "Closed",
       },
       {
@@ -709,13 +707,12 @@ mongoose
         name: "Top AudioBooks App",
         projectImage:
           "https://res.cloudinary.com/ddvgumbyu/image/upload/v1663149176/app3-project/projectspictures/2project_fcddj9.png",
-        startDate: "2023-02-01",
+        startDate: "2022-10-05",
         endDate: "2023-07-01",
         description:
           "This project was born with the idea of developing an application so that freelance book producers can sell their products directly to users without using a publisher.\n- User flow:\n1-You open the app where you register your credentials with the app.\n2-After the registration, the app will ask about the genres of books that you would like to read such as horror, self-help, history, etc.\n3-Post selection of genres you will be presented with the main screen upon which all the books are laid in front of you in the audio formats. There is a various section of audiobooks and voice tracks that you can choose from.\n4-Some of the books are free to listen to, however, you need to buy a subscription to unlock most of the audiobooks.",
         projectUrl: "http:/www.top-audioBooks-app.com",
         onCampus: "Yes",
-        likes: 0,
         status: "Open",
       },
       {
@@ -751,8 +748,112 @@ mongoose
           "Let’s be honest! We all want to live in a world where our finances are managed judiciously and our money is being saved automatically. Earlier people used complex accounting systems, today’s world is way more simple because a finance app can save the day. Why worry when there is an app for everything?\n\n-Key financial app features:\n1.  Account integration\n2.  Security\n3.  Real time spending and tracking\n4.  Simplicity\n5.  Alerts and notifications",
         projectUrl: "https://my-finances-in-my-pocket.herokuapp.com/",
         onCampus: "No",
-        likes: 23,
         status: "Closed",
+      },
+      {
+        collaborators: [
+          {
+            rol: "Web Developer",
+            quantity: 3,
+            users: [allUsersID[3], allUsersID[9]],
+          },
+          {
+            rol: "UX/UI Designer",
+            quantity: 3,
+            users: [allUsersID[14], allUsersID[16], allUsersID[18]],
+          },
+          {
+            rol: "Data Analyst",
+            quantity: 2,
+            users: [allUsersID[23]],
+          },
+          {
+            rol: "Cybersecurity Analyst",
+            quantity: 2,
+            users: [allUsersID[36]],
+          },
+        ],
+        leader: allUsersID[31],
+        name: "Hey Ya App!",
+        projectImage:
+          "https://res.cloudinary.com/ddvgumbyu/image/upload/v1663761186/app3-project/projectspictures/4project_vimrdz.png",
+        startDate: "2022-12-21",
+        endDate: "2023-11-30",
+        description:
+          "Mobile app to connect individuals and social events.\n Hey Ya's is one of the hybrid event apps that centers around helping attendees customize their experience around personal preferences. Event attendees can log into their app before their event so that they can get a headstart on networking, one of the most important aspects of attending an event.\nHey Ya’s event management includes a dedicated social media timeline for your event that allows for photo sharing, messaging, likes, comments, and personal profiles.",
+        projectUrl: "https:/www.hey-ya.com/",
+        onCampus: "No",
+        status: "Open",
+      },
+      {
+        collaborators: [
+          {
+            rol: "Web Developer",
+            quantity: 2,
+            users: [allUsersID[2], allUsersID[8]],
+          },
+          {
+            rol: "UX/UI Designer",
+            quantity: 3,
+            users: [allUsersID[10], allUsersID[12], allUsersID[16]],
+          },
+          {
+            rol: "Data Analyst",
+            quantity: 2,
+            users: [allUsersID[23], allUsersID[29]],
+          },
+          {
+            rol: "Cybersecurity Analyst",
+            quantity: 1,
+            users: [allUsersID[33]],
+          },
+        ],
+        leader: allUsersID[25],
+        name: "Fruits App",
+        projectImage:
+          "https://res.cloudinary.com/ddvgumbyu/image/upload/v1663764758/app3-project/projectspictures/5project_axpxyq.png",
+        startDate: "2022-09-22",
+        endDate: "2023-10-05",
+        description:
+          "The seasonal Fruits Guide App serves as a pocket guide to seasonal food wherever you are! Think of it as your farmers’ market cheat sheet!\n By using the app, you’ll have all of our seasonality data available to you, even when you’re without an internet connection. Plus, you can set reminders so you'll never miss your favorite seasonal food again!\n The app includes links to our online primer filled with fun facts, great recipes and environmental impact data for each type of food!",
+        projectUrl: "https://fruits.herokuapp.com/",
+        onCampus: "No",
+        status: "Closed",
+      },
+      {
+        collaborators: [
+          {
+            rol: "Web Developer",
+            quantity: 3,
+            users: [allUsersID[2], allUsersID[8]],
+          },
+          {
+            rol: "UX/UI Designer",
+            quantity: 3,
+            users: [allUsersID[12], allUsersID[16]],
+          },
+          {
+            rol: "Data Analyst",
+            quantity: 2,
+            users: [allUsersID[28]],
+          },
+          {
+            rol: "Cybersecurity Analyst",
+            quantity: 2,
+            users: [allUsersID[37]],
+          },
+        ],
+        leader: allUsersID[17],
+        name: "Finversity",
+        projectImage:
+          "https://res.cloudinary.com/ddvgumbyu/image/upload/v1663764764/app3-project/projectspictures/6project_lbdkb5.png",
+        startDate: "2023-03-01",
+        endDate: "2024-07-01",
+        description:
+          "Let’s be honest! We all want to live in a world where our finances are managed judiciously and our money is being saved automatically. Earlier people used complex accounting systems, today’s world is way more simple because a finance app can save the day. Why worry when there is an app for everything?\n\n-Key financial app features:\n1.  Account integration\n2.  Security\n3.  Real time spending and tracking\n4.  Simplicity\n5.  Alerts and notifications",
+        projectUrl: "http:/www.finversity-app.com",
+        onCampus: "Yes",
+        status: "Open",
       },
     ];
     return Project.insertMany(projects);
@@ -866,7 +967,6 @@ mongoose
         project: allProjectsID[2],
         status: "Accepted",
       },
-
       {
         user: allUsersID[23],
         project: allProjectsID[2],
@@ -936,6 +1036,114 @@ mongoose
       {
         user: allUsersID[39],
         project: allProjectsID[3],
+        status: "Accepted",
+      },
+      //Project 4
+      {
+        user: allUsersID[3],
+        project: allProjectsID[4],
+        status: "Accepted",
+      },
+      {
+        user: allUsersID[9],
+        project: allProjectsID[4],
+        status: "Accepted",
+      },
+      {
+        user: allUsersID[14],
+        project: allProjectsID[4],
+        status: "Accepted",
+      },
+      {
+        user: allUsersID[16],
+        project: allProjectsID[4],
+        status: "Accepted",
+      },
+      {
+        user: allUsersID[18],
+        project: allProjectsID[4],
+        status: "Accepted",
+      },
+      {
+        user: allUsersID[23],
+        project: allProjectsID[4],
+        status: "Accepted",
+      },
+      {
+        user: allUsersID[36],
+        project: allProjectsID[4],
+        status: "Accepted",
+      },
+      //Project 5
+      {
+        user: allUsersID[2],
+        project: allProjectsID[5],
+        status: "Accepted",
+      },
+      {
+        user: allUsersID[8],
+        project: allProjectsID[5],
+        status: "Accepted",
+      },
+      {
+        user: allUsersID[10],
+        project: allProjectsID[5],
+        status: "Accepted",
+      },
+      {
+        user: allUsersID[12],
+        project: allProjectsID[5],
+        status: "Accepted",
+      },
+      {
+        user: allUsersID[16],
+        project: allProjectsID[5],
+        status: "Accepted",
+      },
+      {
+        user: allUsersID[23],
+        project: allProjectsID[5],
+        status: "Accepted",
+      },
+      {
+        user: allUsersID[29],
+        project: allProjectsID[5],
+        status: "Accepted",
+      },
+      {
+        user: allUsersID[33],
+        project: allProjectsID[5],
+        status: "Accepted",
+      },
+      //Project 5
+      {
+        user: allUsersID[2],
+        project: allProjectsID[6],
+        status: "Accepted",
+      },
+      {
+        user: allUsersID[8],
+        project: allProjectsID[6],
+        status: "Accepted",
+      },
+      {
+        user: allUsersID[12],
+        project: allProjectsID[6],
+        status: "Accepted",
+      },
+      {
+        user: allUsersID[16],
+        project: allProjectsID[6],
+        status: "Accepted",
+      },
+      {
+        user: allUsersID[28],
+        project: allProjectsID[6],
+        status: "Accepted",
+      },
+      {
+        user: allUsersID[37],
+        project: allProjectsID[6],
         status: "Accepted",
       },
     ];
