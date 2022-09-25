@@ -69,13 +69,18 @@ router.get("/:id", isAuthenticated, async (req, res, next) => {
 });
 
 // @desc    Create a review
-// @route   POST /api/v1/reviews/:id
+// @route   POST /api/v1/reviews/:projectId
 // @access  Private
 router.post("/:projectId", isAuthenticated, async (req, res, next) => {
   const { projectId } = req.params;
   const user = req.payload._id;
 
   const { title, comment, puntuation } = req.body;
+
+  // Check if the mandatory fields are provided as empty string
+  if (title === "" || comment === "" || puntuation === "") {
+    return next(new ErrorResponse("Please fill all mandatory fields", 400));
+  }
 
   const parsePuntuation = parseInt(puntuation);
 
@@ -108,6 +113,11 @@ router.put(
   async (req, res, next) => {
     const { id } = req.params;
     const { title, comment, puntuation } = req.body;
+
+    // Check if the mandatory fields are provided as empty string
+    if (title === "" || comment === "" || puntuation === "") {
+      return next(new ErrorResponse("Please fill all mandatory fields", 400));
+    }
 
     const parsePuntuation = parseInt(puntuation);
 

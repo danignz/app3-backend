@@ -1115,7 +1115,7 @@ mongoose
         project: allProjectsID[5],
         status: "Accepted",
       },
-      //Project 5
+      //Project 6
       {
         user: allUsersID[2],
         project: allProjectsID[6],

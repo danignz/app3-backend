@@ -4,7 +4,7 @@ const { isAuthenticated } = require("../middlewares/jwt");
 const ErrorResponse = require("../utils/error");
 const fileUploader = require("../config/cloudinary.config");
 
-// @desc    Edit a user
+// @desc    Edit user
 // @route   PUT /api/v1/users/edit
 // @access  Private
 router.put("/edit", isAuthenticated, async (req, res, next) => {
@@ -120,7 +120,7 @@ router.get("/enum-values", async (req, res, next) => {
   if (enumValuesProfession && enumValuesLocation) {
     res.status(200).json({ data: enumValues });
   } else {
-    return next(new ErrorResponse(`Can not access enumValues DB`, 404));
+    return next(new ErrorResponse(`Can not access enumValues DB`, 500));
   }
 });
 
@@ -141,7 +141,7 @@ router.post(
 );
 
 // @desc    Get all data related to the current authenticated user
-// @route   GET /api/v1/user/logged-in-user
+// @route   GET /api/v1/users/logged-in-user
 // @access  Private
 router.get("/logged-in-user", isAuthenticated, async (req, res, next) => {
   try {
@@ -161,7 +161,6 @@ router.get("/logged-in-user", isAuthenticated, async (req, res, next) => {
       about: user.about,
       contactInfo: user.contactInfo,
     };
-    console.log(publicUser);
     res.status(200).json({ data: publicUser });
   } catch (error) {
     next(error);

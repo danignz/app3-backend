@@ -57,6 +57,19 @@ router.post("/", isAuthenticated, async (req, res, next) => {
     onCampus,
   } = req.body;
 
+  // Check if the mandatory fields are provided as empty string
+  if (
+    name === "" ||
+    startDate === "" ||
+    endDate === "" ||
+    description === "" ||
+    onCampus === ""
+  ) {
+    return next(
+      new ErrorResponse("Please fill all mandatory fields to register", 400)
+    );
+  }
+
   const parseStartDate = Date.parse(startDate);
   const parseEndDate = Date.parse(endDate);
   const enumValuesProfession = User.schema.path("profession").enumValues;
@@ -73,6 +86,7 @@ router.post("/", isAuthenticated, async (req, res, next) => {
       "https://res.cloudinary.com/ddvgumbyu/image/upload/v1663150913/app3-project/projectspictures/defaultproject_zojuvf.png";
   }
 
+  //Check if the string is a correct URL
   const projectUrlRegex =
     /^$|[-a-zA-Z0-9@:%._~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_.~#?&//=]*)?/gi;
 
@@ -85,6 +99,7 @@ router.post("/", isAuthenticated, async (req, res, next) => {
     );
   }
 
+  //Check can not create a project without at least 1 place avariable
   let numberMembers = 0;
   for (let i = 0; i < enumValuesProfession.length; i++) {
     numberMembers += collaborators[i].quantity;
@@ -143,6 +158,19 @@ router.put(
       projectImage,
     } = req.body;
 
+    // Check if the mandatory fields are provided as empty string
+    if (
+      name === "" ||
+      startDate === "" ||
+      endDate === "" ||
+      description === "" ||
+      onCampus === ""
+    ) {
+      return next(
+        new ErrorResponse("Please fill all mandatory fields to register", 400)
+      );
+    }
+
     const parseStartDate = startDate && Date.parse(startDate);
     const parseEndDate = endDate && Date.parse(endDate);
     const enumValuesProfession = User.schema.path("profession").enumValues;
@@ -152,6 +180,7 @@ router.put(
       if (!project) {
         return next(new ErrorResponse(`Project not found by id: ${id}`, 404));
       } else {
+        //Protection: updating project not allow to reject members that are subscribed
         if (collaborators) {
           for (let i = 0; i < enumValuesProfession.length; i++) {
             if (
@@ -166,6 +195,7 @@ router.put(
             }
           }
 
+          //Protection: can not update a project if at least 1 place avariable
           let numberMembers = 0;
           for (let i = 0; i < enumValuesProfession.length; i++) {
             numberMembers += collaborators[i].quantity;
@@ -180,6 +210,7 @@ router.put(
           }
         }
 
+        //Protection: Can not close a project if at least one member had collaborate in it.
         if (status === "Closed") {
           let numberCollaborators = 0;
           for (let i = 0; i < enumValuesProfession.length; i++) {

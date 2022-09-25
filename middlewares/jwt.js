@@ -27,6 +27,10 @@ const isAuthenticated = jwt({
   getToken: getTokenFromHeaders, //token
 });
 
+// This middleware ensures that the authenticated user has permissions to execute Write operations on a resource.
+// Middleware input param (model): Receives the database model to execute the query.
+// Req params: Receives the id of a resource to check who is the owner.
+// Req.payload: Receives the current auth user.
 const isOwner = (model) => async (req, res, next) => {
   const { id } = req.params;
 
